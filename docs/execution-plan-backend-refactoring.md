@@ -10,7 +10,7 @@
 
 ## Repository Layer Updates
 
-- Step 4: Create OwnerRepository interface extending JpaRepository with findByName method. Update PetRepository to add findByOwner method. Verify by running `mvn compile`
+- Step 4: Create OwnerRepository interface extending JpaRepository with findByName method. Update PetRepository to add findByOwner method. Verify by running `mvn compile` ✅
 
 - Step 5: Update VisitRepository to add findByOwner method. Verify by running `mvn compile`
 

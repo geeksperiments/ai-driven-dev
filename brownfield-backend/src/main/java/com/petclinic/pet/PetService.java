@@ -38,9 +38,11 @@ public class PetService {
     }
 
     private void validatePetUniquenessPerOwner(Pet pet) {
-        Pet existingPet = petRepository.findByNameAndOwnerName(pet.getName(), pet.getOwnerName());
-        if (existingPet != null && !existingPet.getId().equals(pet.getId())) {
-            throw new IllegalArgumentException("Owner " + pet.getOwnerName() + " already has a pet named " + pet.getName());
+        if (pet.getOwner() != null) {
+            Pet existingPet = petRepository.findByNameAndOwner(pet.getName(), pet.getOwner());
+            if (existingPet != null && !existingPet.getId().equals(pet.getId())) {
+                throw new IllegalArgumentException("Owner " + pet.getOwner().getName() + " already has a pet named " + pet.getName());
+            }
         }
     }
 }
