@@ -6,7 +6,7 @@
 
 - Step 2: Refactor Pet entity to replace ownerName field with @ManyToOne Owner relationship. Update Pet schema and test data in data.sql to use foreign key references. Verify by running `mvn compile` ✅
 
-- Step 3: Update Visit entity to add @ManyToOne Owner relationship. Modify Visit schema and test data accordingly. Verify by running `mvn compile`
+- Step 3: Update Visit entity to add @ManyToOne Owner relationship. Modify Visit schema and test data accordingly. Verify by running `mvn compile` ✅
 
 ## Repository Layer Updates
 
