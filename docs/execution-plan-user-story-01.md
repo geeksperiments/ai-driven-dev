@@ -8,8 +8,8 @@
 
 # Moving to the frontend
 
-- Step 4: In greenfield-frontend: Inside greenfield-frontend/src, create a subfolder called `pet`. Generate a service class called petService.ts . It should use Fetch API and allow to connect to this api: http://localhost:8080/swagger-ui/index.html#/pet-controller/ .
+- Step 4: In greenfield-frontend: Inside greenfield-frontend/src, create a subfolder called `pet`. Generate a service class called petService.ts . It should use Fetch API and allow to connect to this api: http://localhost:8080/swagger-ui/index.html#/pet-controller/ . ✅
 
-- Step 5: greenfield-frontend: create a new component called PetList.tsx which displays the pet list. App.tsx should use it.
+- Step 5: greenfield-frontend: create a new component called PetList.tsx which displays the pet list. App.tsx should use it. ✅
 
-- Step 6: greenfield-frontend: add tests for PetList.tsx and petService.ts
+- Step 6: greenfield-frontend: add tests for PetList.tsx and petService.ts ✅
