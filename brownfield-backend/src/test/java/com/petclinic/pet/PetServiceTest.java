@@ -1,5 +1,7 @@
 package com.petclinic.pet;
 
+import com.petclinic.owner.Owner;
+import com.petclinic.owner.OwnerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +16,16 @@ class PetServiceTest {
 
     @Autowired
     private PetService petService;
+    
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     @Test
     void shouldSaveNewPet() {
         // given
-        Pet pet = new Pet("Buddy", "Alice");
+        Owner owner = new Owner("Alice", "123 Test St");
+        ownerRepository.save(owner);
+        Pet pet = new Pet("Buddy", owner);
 
         // when
         Pet savedPet = petService.save(pet);
@@ -26,15 +33,17 @@ class PetServiceTest {
         // then
         assertThat(savedPet.getId()).isNotNull();
         assertThat(savedPet.getName()).isEqualTo("Buddy");
-        assertThat(savedPet.getOwnerName()).isEqualTo("Alice");
+        assertThat(savedPet.getOwner().getName()).isEqualTo("Alice");
     }
 
     @Test
     void shouldThrowExceptionWhenOwnerHasDuplicatePetName() {
-        // given    
-        Pet firstPet = new Pet("Max", "Bob");
+        // given
+        Owner owner = new Owner("Bob", "456 Test Ave");
+        ownerRepository.save(owner);
+        Pet firstPet = new Pet("Max", owner);
         petService.save(firstPet);
-        Pet duplicatePet = new Pet("Max", "Bob");
+        Pet duplicatePet = new Pet("Max", owner);
 
         // when & then
         assertThatThrownBy(() -> petService.save(duplicatePet))
@@ -45,8 +54,12 @@ class PetServiceTest {
     @Test
     void shouldAllowDifferentOwnersToHavePetsWithSameName() {
         // given
-        Pet pet1 = new Pet("Charlie", "Carol");
-        Pet pet2 = new Pet("Charlie", "Dave");
+        Owner owner1 = new Owner("Carol", "789 Test Rd");
+        Owner owner2 = new Owner("Dave", "321 Test Blvd");
+        ownerRepository.save(owner1);
+        ownerRepository.save(owner2);
+        Pet pet1 = new Pet("Charlie", owner1);
+        Pet pet2 = new Pet("Charlie", owner2);
 
         // when
         Pet savedPet1 = petService.save(pet1);
@@ -61,8 +74,10 @@ class PetServiceTest {
     @Test
     void shouldAllowSameOwnerToHavePetsWithDifferentNames() {
         // given
-        Pet pet1 = new Pet("Rex", "Eve");
-        Pet pet2 = new Pet("Luna", "Eve");
+        Owner owner = new Owner("Eve", "654 Test Way");
+        ownerRepository.save(owner);
+        Pet pet1 = new Pet("Rex", owner);
+        Pet pet2 = new Pet("Luna", owner);
 
         // when
         Pet savedPet1 = petService.save(pet1);
@@ -78,8 +93,12 @@ class PetServiceTest {
     @Test
     void shouldFindAllPets() {
         // given
-        Pet pet1 = new Pet("Milo", "Frank");
-        Pet pet2 = new Pet("Bella", "Grace");
+        Owner owner1 = new Owner("Frank", "987 Test Ln");
+        Owner owner2 = new Owner("Grace", "147 Test Ct");
+        ownerRepository.save(owner1);
+        ownerRepository.save(owner2);
+        Pet pet1 = new Pet("Milo", owner1);
+        Pet pet2 = new Pet("Bella", owner2);
         petService.save(pet1);
         petService.save(pet2);
 
@@ -93,7 +112,9 @@ class PetServiceTest {
     @Test
     void shouldFindPetById() {
         // given
-        Pet pet = new Pet("Oscar", "Helen");
+        Owner owner = new Owner("Helen", "258 Test Dr");
+        ownerRepository.save(owner);
+        Pet pet = new Pet("Oscar", owner);
         Pet savedPet = petService.save(pet);
 
         // when
@@ -102,13 +123,15 @@ class PetServiceTest {
         // then
         assertThat(foundPet).isNotNull();
         assertThat(foundPet.getName()).isEqualTo("Oscar");
-        assertThat(foundPet.getOwnerName()).isEqualTo("Helen");
+        assertThat(foundPet.getOwner().getName()).isEqualTo("Helen");
     }
 
     @Test
     void shouldFindPetByName() {
         // given
-        Pet pet = new Pet("Daisy", "Ivan");
+        Owner owner = new Owner("Ivan", "369 Test Pl");
+        ownerRepository.save(owner);
+        Pet pet = new Pet("Daisy", owner);
         petService.save(pet);
 
         // when
@@ -116,13 +139,15 @@ class PetServiceTest {
 
         // then
         assertThat(foundPet).isNotNull();
-        assertThat(foundPet.getOwnerName()).isEqualTo("Ivan");
+        assertThat(foundPet.getOwner().getName()).isEqualTo("Ivan");
     }
 
     @Test
     void shouldDeletePet() {
         // given
-        Pet pet = new Pet("Rocky", "Jack");
+        Owner owner = new Owner("Jack", "741 Test Ave");
+        ownerRepository.save(owner);
+        Pet pet = new Pet("Rocky", owner);
         Pet savedPet = petService.save(pet);
 
         // when

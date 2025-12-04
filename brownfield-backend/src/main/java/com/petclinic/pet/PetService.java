@@ -39,9 +39,25 @@ public class PetService {
 
     private void validatePetUniquenessPerOwner(Pet pet) {
         if (pet.getOwner() != null) {
-            Pet existingPet = petRepository.findByNameAndOwner(pet.getName(), pet.getOwner());
-            if (existingPet != null && !existingPet.getId().equals(pet.getId())) {
-                throw new IllegalArgumentException("Owner " + pet.getOwner().getName() + " already has a pet named " + pet.getName());
+            Pet existingPet = null;
+            Long ownerId = pet.getOwner().getId();
+            if (ownerId != null) {
+                existingPet = petRepository.findByNameAndOwnerId(pet.getName(), ownerId);
+            } else {
+                existingPet = petRepository.findByNameAndOwner(pet.getName(), pet.getOwner());
+            }
+            // Defensive check: ensure the existing pet actually belongs to the same owner
+            if (existingPet != null) {
+                boolean sameOwner = false;
+                if (ownerId != null && existingPet.getOwner() != null && existingPet.getOwner().getId() != null) {
+                    sameOwner = existingPet.getOwner().getId().equals(ownerId);
+                } else if (existingPet.getOwner() != null && pet.getOwner().getName() != null) {
+                    sameOwner = pet.getOwner().getName().equals(existingPet.getOwner().getName());
+                }
+
+                if (sameOwner && (pet.getId() == null || !existingPet.getId().equals(pet.getId()))) {
+                    throw new IllegalArgumentException("Owner " + pet.getOwner().getName() + " already has a pet named " + pet.getName());
+                }
             }
         }
     }

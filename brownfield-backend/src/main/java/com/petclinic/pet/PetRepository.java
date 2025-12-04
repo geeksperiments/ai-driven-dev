@@ -13,5 +13,8 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
     
     Pet findByNameAndOwner(String name, Owner owner);
     
+    // Query by owner id to avoid relying on entity equality when owner is detached
+    Pet findByNameAndOwnerId(String name, Long ownerId);
+    
     List<Pet> findByOwner(Owner owner);
 }

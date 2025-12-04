@@ -14,16 +14,21 @@ public class Visit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private LocalDateTime dateTime;
 
+    @Column(nullable = false)
     private String clinic;
 
+    @Column(nullable = false, length = 1000)
     private String summary;
 
     @ManyToOne
+    @JoinColumn(name = "pet_id")
     private Pet pet;
 
     @ManyToOne
+    @JoinColumn(name = "vet_id")
     private Vet vet;
 
     @ManyToOne

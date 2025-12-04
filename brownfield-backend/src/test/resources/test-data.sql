@@ -1,3 +1,4 @@
+-- Test data for HSQLDB
 -- Disable foreign key checks for HSQLDB
 SET DATABASE REFERENTIAL INTEGRITY FALSE;
 

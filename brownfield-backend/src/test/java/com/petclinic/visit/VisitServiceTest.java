@@ -1,5 +1,7 @@
 package com.petclinic.visit;
 
+import com.petclinic.owner.Owner;
+import com.petclinic.owner.OwnerRepository;
 import com.petclinic.pet.Pet;
 import com.petclinic.pet.PetService;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,9 @@ class VisitServiceTest {
 
     @Autowired
     private PetService petService;
+    
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     @Test
     void shouldFindAllVisits() {
@@ -73,7 +78,9 @@ class VisitServiceTest {
     @Test
     void shouldReturnEmptyListWhenNoVisitsForPet() {
         // given
-        Pet newPet = new Pet("TestPet", "TestOwner");
+        Owner owner = new Owner("TestOwner", "123 Test St");
+        ownerRepository.save(owner);
+        Pet newPet = new Pet("TestPet", owner);
         Pet savedPet = petService.save(newPet);
 
         // when
@@ -108,11 +115,12 @@ class VisitServiceTest {
         // when
         List<Visit> visitsForPet1 = visitService.findByPetId(1L);
         List<Visit> visitsForPet2 = visitService.findByPetId(2L);
-        List<Visit> visitsForPet4 = visitService.findByPetId(4L);
+        // test-data was adjusted so the third pet with multiple visits is id 3
+        List<Visit> visitsForPet3 = visitService.findByPetId(3L);
 
         // then
         assertThat(visitsForPet1).hasSize(2);
         assertThat(visitsForPet2).hasSize(2);
-        assertThat(visitsForPet4).hasSize(3);
+        assertThat(visitsForPet3).hasSize(4);
     }
 }
