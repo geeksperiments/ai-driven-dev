@@ -1,9 +1,7 @@
 package com.petclinic.pet;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.petclinic.owner.Owner;
+import jakarta.persistence.*;
 
 @Entity
 public class Pet {
@@ -14,20 +12,22 @@ public class Pet {
 
     private String name;
 
-    private String ownerName;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
 
     public Pet() {
     }
 
-    public Pet(Long id, String name, String ownerName) {
+    public Pet(Long id, String name, Owner owner) {
         this.id = id;
         this.name = name;
-        this.ownerName = ownerName;
+        this.owner = owner;
     }
 
-    public Pet(String name, String ownerName) {
+    public Pet(String name, Owner owner) {
         this.name = name;
-        this.ownerName = ownerName;
+        this.owner = owner;
     }
 
     public Long getId() {
@@ -38,7 +38,11 @@ public class Pet {
         return name;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 }
