@@ -1,3 +1,4 @@
+import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import PetList from '../src/pet/PetList';
@@ -16,12 +17,12 @@ describe('PetList', () => {
 
     render(<PetList />);
 
-    expect(screen.getByText('Loading pets...')).toBeInTheDocument();
+    expect(screen.getByText('Loading pets...')).toBeTruthy();
 
     await waitFor(() => {
-      expect(screen.getByText('Pet List')).toBeInTheDocument();
-      expect(screen.getByText('Buddy')).toBeInTheDocument();
-      expect(screen.getByText('Whiskers')).toBeInTheDocument();
+      expect(screen.getByText('Pet List')).toBeTruthy();
+      expect(screen.getByText('Buddy')).toBeTruthy();
+      expect(screen.getByText('Whiskers')).toBeTruthy();
     });
   });
 
@@ -31,7 +32,7 @@ describe('PetList', () => {
     render(<PetList />);
 
     await waitFor(() => {
-      expect(screen.getByText('Error: Failed to load pets')).toBeInTheDocument();
+      expect(screen.getByText('Error: Failed to load pets')).toBeTruthy();
     });
   });
 });
