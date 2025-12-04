@@ -1,19 +1,25 @@
 import React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import PetList from '../src/pet/PetList';
-import { petService } from '../src/pet/petService';
 
-vi.mock('../src/pet/petService');
+global.fetch = vi.fn();
 
 describe('PetList', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
   it('should display pets when loaded', async () => {
     const mockPets = [
       { id: 1, name: 'Buddy', ownerName: 'John' },
       { id: 2, name: 'Whiskers', ownerName: 'Jane' }
     ];
 
-    vi.mocked(petService.getAllPets).mockResolvedValue(mockPets);
+    (fetch as any).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockPets,
+    });
 
     render(<PetList />);
 
@@ -27,7 +33,7 @@ describe('PetList', () => {
   });
 
   it('should display error message when fetch fails', async () => {
-    vi.mocked(petService.getAllPets).mockRejectedValue(new Error('API Error'));
+    (fetch as any).mockRejectedValueOnce(new Error('API Error'));
 
     render(<PetList />);
 

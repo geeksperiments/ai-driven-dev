@@ -2,7 +2,6 @@ import './App.css'
 import PetList from './pet/PetList'
 
 function App() {
-
   return (
     <>
       <p className="read-the-docs">

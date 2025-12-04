@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Pet, petService } from './petService';
+// import { Pet, petService } from './petService';
+
+interface Pet {
+  id: number;
+  name: string;
+  ownerName: string;
+}
 
 export default function PetList() {
   const [pets, setPets] = useState<Pet[]>([]);
@@ -9,9 +15,14 @@ export default function PetList() {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const data = await petService.getAllPets();
+        const response = await fetch('http://localhost:8080/pets');
+        if (!response.ok) {
+          throw new Error('Failed to fetch pets');
+        }
+        const data = await response.json();
         setPets(data);
       } catch (err) {
+        console.error('Error fetching pets:', err);
         setError('Failed to load pets');
       } finally {
         setLoading(false);
