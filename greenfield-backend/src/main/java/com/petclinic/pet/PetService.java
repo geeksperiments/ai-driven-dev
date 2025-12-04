@@ -20,6 +20,10 @@ public class PetService {
     }
     
     public Pet save(Pet pet) {
+        Pet existingPet = petRepository.findByNameAndOwnerName(pet.getName(), pet.getOwnerName());
+        if (existingPet != null) {
+            throw new IllegalArgumentException("Pet with name '" + pet.getName() + "' already exists for owner '" + pet.getOwnerName() + "'");
+        }
         return petRepository.save(pet);
     }
 }
