@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react';
-// import { Pet, petService } from './petService';
 
 interface Pet {
   id: number;
   name: string;
   ownerName: string;
 }
+
+// Service methods defined inline to avoid import issues
+const getAllPets = async (): Promise<Pet[]> => {
+  const response = await fetch('http://localhost:8080/pets');
+  if (!response.ok) {
+    throw new Error('Failed to fetch pets');
+  }
+  return response.json();
+};
 
 export default function PetList() {
   const [pets, setPets] = useState<Pet[]>([]);
@@ -15,11 +23,7 @@ export default function PetList() {
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await fetch('http://localhost:8080/pets');
-        if (!response.ok) {
-          throw new Error('Failed to fetch pets');
-        }
-        const data = await response.json();
+        const data = await getAllPets();
         setPets(data);
       } catch (err) {
         console.error('Error fetching pets:', err);
