@@ -20,13 +20,13 @@
 
 ## Service Layer Refactoring
 
-- Step 7: Refactor PetService to work with Owner entities instead of ownerName strings. Update business rules for pet uniqueness per owner. Verify by running `mvnw compile`
+- Step 7: Refactor PetService to work with Owner entities instead of ownerName strings. Update business rules for pet uniqueness per owner. Verify by running `mvnw compile` ✅
 
-- Step 8: Update VisitService to work with Owner entities. Ensure proper relationship handling. Verify by running `mvnw compile`
+- Step 8: Update VisitService to work with Owner entities. Ensure proper relationship handling. Verify by running `mvnw compile` ✅
 
 # Time to test service layer changes
 
-- Step 9: Update existing PetServiceTest and VisitServiceTest to work with Owner entities. Run `mvnw test` to ensure all service tests pass
+- Step 9: Update existing PetServiceTest and VisitServiceTest to work with Owner entities. Run `mvnw test` to ensure all service tests pass ✅
 
 ## API Layer Updates
 
