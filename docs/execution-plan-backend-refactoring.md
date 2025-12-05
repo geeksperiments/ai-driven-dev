@@ -30,12 +30,12 @@
 
 ## API Layer Updates
 
-- Step 10: Update PetController to include Owner information in Pet API responses. Modify Pet DTOs if needed. Verify by running `mvnw compile`
+- Step 10: Update PetController to include Owner information in Pet API responses. Modify Pet DTOs if needed. Verify by running `mvnw compile` ✅
 
-- Step 11: Update VisitController to include Owner information in Visit API responses. Modify Visit DTOs if needed. Verify by running `mvnw compile`
+- Step 11: Update VisitController to include Owner information in Visit API responses. Modify Visit DTOs if needed. Verify by running `mvnw compile` ✅
 
 # Final Integration Testing
 
-- Step 12: Run `mvnw test` to ensure all existing tests pass with new Owner entity relationships
+- Step 12: Run `mvnw test` to ensure all existing tests pass with new Owner entity relationships ✅
 
 - Step 13: Start application with `mvnw spring-boot:run` and test API endpoints manually or with integration tests to verify Owner data is properly exposed through Pet and Visit APIs
