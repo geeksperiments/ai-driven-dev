@@ -16,7 +16,7 @@
 
 # Time to test the database and repository changes
 
-- Step 6: Create OwnerRepositoryTest with JUnit tests for save, findById, findByName operations. Run `mvnw test` to ensure all tests pass and database schema works correctly 
+- Step 6: Create OwnerRepositoryTest with JUnit tests for save, findById, findByName operations. Run `mvnw test` to ensure all tests pass and database schema works correctly ✅ 
 
 ## Service Layer Refactoring
 
